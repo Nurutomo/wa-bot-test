@@ -9,4 +9,6 @@ Template WA Bot (Modified example from [whatsapp-web.js](https://github.com/pedr
 5. Jalankan file `install.bat` untuk memulai instalasi dan tunggu hingga instalasi selesai
 6. Jalankan file `start.bat` untuk menjalankan bot tersebut dan tunggu sampai ada teks `READY!`
 
+Jika bot tidak merespon, tekan `Ctrl + C` untuk memperbaikinya
+
 **NOTE:** _Jika kamu bisa coding, kamu mungkin bisa merubah kode di `index.js`_
