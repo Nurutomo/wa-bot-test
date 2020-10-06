@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Nurutomo/wa-bot-test)
+
 # wa-bot-test
 Template WA Bot (Modified example from [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js/))
 ## Tutorial Instalasi
