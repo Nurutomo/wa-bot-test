@@ -1,6 +1,7 @@
 // Modified from 'whatsapp-web.js/examples.js'
 
 const fs = require('fs');
+const brainly = require('brainly-scraper-v2');
 const { Client, Location } =  require('whatsapp-web.js');
 const SESSION_FILE_PATH = './session.json';
 let sessionCfg;
@@ -56,6 +57,7 @@ client.on('message_create'/*'message'*/, async msg => {
 !resendmedia (harus di tag yang berisi media)
 !ping reply (ping di tag)
 !ping (ping tanpa di tag)
+!brainly <soal>
 `)
     } else if (msg.body == '!ping') {
         // Send a new message to the same chat
@@ -152,6 +154,14 @@ client.on('message_create'/*'message'*/, async msg => {
             Timestamp: ${quotedMsg.timestamp}
             Has Media? ${quotedMsg.hasMedia}
         `);
+    } else if (msg.body.startsWith('!brainly ')) {
+        // asking a question to brainly with API
+        let soal = msg.body.split(' ')[1];
+	 
+		 brainly("${soal}", 1, "id").then(res => {
+		 var msg = res['data'][0]['jawaban'][0]['text'];
+		 msg.reply('${msg}');
+		 }
     } else if (msg.body == '!resendmedia' && msg.hasQuotedMsg) {
         const quotedMsg = await msg.getQuotedMessage();
         if (quotedMsg.hasMedia) {
