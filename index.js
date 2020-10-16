@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const brainly = require('brainly-scraper-v2');
+const request = require('request');
 const { Client, Location } =  require('whatsapp-web.js');
 const SESSION_FILE_PATH = './session.json';
 let sessionCfg;
@@ -58,6 +59,7 @@ client.on('message_create'/*'message'*/, async msg => {
 !ping reply (ping di tag)
 !ping (ping tanpa di tag)
 !brainly <soal>
+!quotes
 `)
     } else if (msg.body == '!ping') {
         // Send a new message to the same chat
@@ -154,6 +156,19 @@ client.on('message_create'/*'message'*/, async msg => {
             Timestamp: ${quotedMsg.timestamp}
             Has Media? ${quotedMsg.hasMedia}
         `);
+    } else if (msg.body.startsWith('!quotes ')) {
+        // Random kata kata Quotes perlawanan
+	 
+		request(`https://perlawanan.herokuapp.com`, (err, res, body) => {
+            if (!err && res.statusCode == 200) {
+                const data = JSON.parse(body);
+                const name = data.author;
+                const kuotes = data.quote;
+
+                const msg = `" ${kuotes} " \n~ ${name} ~`;
+                msg.reply('${msg}');
+            }
+	}
     } else if (msg.body.startsWith('!brainly ')) {
         // asking a question to brainly with API
         let soal = msg.body.split(' ')[1];
