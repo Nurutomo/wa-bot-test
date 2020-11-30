@@ -96,6 +96,7 @@ client.on('message_create'/*'message'*/, async msg => {
         } else {
             msg.reply('This command can only be used in a group!');
         }
+    // Prevent Leave
     // } else if (msg.body == '!leave') {
     //     // Leave the group
     //     let chat = await msg.getChat();
@@ -158,8 +159,7 @@ client.on('message_create'/*'message'*/, async msg => {
         `);
     } else if (msg.body.startsWith('!quotes ')) {
         // Random kata kata Quotes perlawanan
-	 
-		request(`https://perlawanan.herokuapp.com`, (err, res, body) => {
+	request(`https://perlawanan.herokuapp.com`, (err, res, body) => {
             if (!err && res.statusCode == 200) {
                 const data = JSON.parse(body);
                 const name = data.author;
@@ -171,12 +171,11 @@ client.on('message_create'/*'message'*/, async msg => {
 	}
     } else if (msg.body.startsWith('!brainly ')) {
         // asking a question to brainly with API
-        let soal = msg.body.split(' ')[1];
-	 
-		 brainly("${soal}", 1, "id").then(res => {
-		 var msg = res['data'][0]['jawaban'][0]['text'];
-		 msg.reply('${msg}');
-		 }
+        let soal = msg.body.split(' ').slice(1);
+	brainly(soal, 1, "id").then(res => {
+		var answer = res.data[0].jawaban[0].text;
+		msg.reply(answer);
+	})
     } else if (msg.body == '!resendmedia' && msg.hasQuotedMsg) {
         const quotedMsg = await msg.getQuotedMessage();
         if (quotedMsg.hasMedia) {
@@ -185,6 +184,7 @@ client.on('message_create'/*'message'*/, async msg => {
         }
     } else if (msg.body == '!location') {
         msg.reply(new Location(37.422, -122.084, 'Googleplex\nGoogle Headquarters'));
+    // Prevent Spam & User Privacy
     // } else if (msg.location) {
     //     msg.reply(msg.location);
     // } else if (msg.body.startsWith('!status ')) {
@@ -216,15 +216,15 @@ client.on('message_create'/*'message'*/, async msg => {
     } else if (msg.body === '!typing') {
         const chat = await msg.getChat();
         // simulates typing in the chat
-        chat.sendStateTyping();        
+        chat.sendStateTyping();
     } else if (msg.body === '!recording') {
         const chat = await msg.getChat();
         // simulates recording audio in the chat
-        chat.sendStateRecording();        
+        chat.sendStateRecording();
     } else if (msg.body === '!clearstate') {
         const chat = await msg.getChat();
         // stops typing or recording in the chat
-        chat.clearState();        
+        chat.clearState();
     } else if (msg.body === '!stop') {
         msg.reply('Bye bye! :V Bot mati dalam 10 detik');
         setTimeout(()=>process.exit(1), 10000);
