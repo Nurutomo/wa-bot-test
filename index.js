@@ -171,7 +171,7 @@ client.on('message_create'/*'message'*/, async msg => {
 	})
     } else if (msg.body.startsWith('!brainly ')) {
         // asking a question to brainly with API
-        let soal = msg.body.split(' ').slice(1);
+        let soal = msg.body.split(' ').slice(1).join(" ");
 	brainly(soal, 1, "id").then(res => {
 		var answer = res.data[0].jawaban[0].text;
 		msg.reply(answer);
