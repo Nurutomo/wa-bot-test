@@ -165,10 +165,10 @@ client.on('message_create'/*'message'*/, async msg => {
                 const name = data.author;
                 const kuotes = data.quote;
 
-                const msg = `" ${kuotes} " \n~ ${name} ~`;
-                msg.reply('${msg}');
+                const hmm = `" ${kuotes} " \n~ ${name} ~`;
+                msg.reply(hmm);
             }
-	}
+	})
     } else if (msg.body.startsWith('!brainly ')) {
         // asking a question to brainly with API
         let soal = msg.body.split(' ').slice(1);
